@@ -1,3 +1,4 @@
+import 'package:ramadan_apps/data/dto/response/base_response/base_response.dart';
 import 'package:ramadan_apps/data/dto/surah_dto.dart';
 import 'package:ramadan_apps/network/http_util/http_util.dart';
 
@@ -12,7 +13,13 @@ class SurahRemoteDataSource {
     return response.fold((error) => throw Exception(error.messageAsString), (
       data,
     ) {
-      if (data is Map<String, dynamic> && data['data'] is List) {
+      if (data is BaseResponse) {
+        if (data.data is List) {
+          return (data.data as List)
+              .map((e) => SurahDto.fromJson(e as Map<String, dynamic>))
+              .toList();
+        }
+      } else if (data is Map<String, dynamic> && data['data'] is List) {
         return (data['data'] as List)
             .map((e) => SurahDto.fromJson(e as Map<String, dynamic>))
             .toList();
