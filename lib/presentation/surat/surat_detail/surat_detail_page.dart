@@ -13,69 +13,88 @@ class SuratDetailPage extends GetState<SuratDetailBloc> with _Worker {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColor.primaryColor),
-          onPressed: () => Get.back(),
-        ),
-        title: Column(
-          children: [
-            Text(
-              "Surah Al-Kahf",
-              style: AppTextStyles.subtitle1.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColor.primaryColor,
+    return GetStateBuilder<SuratDetailBloc>(
+      container: this,
+      context: context,
+      init: bloc,
+      builder: (_) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: AppColor.primaryColor),
+              onPressed: () => Get.back(),
+            ),
+            title: Obx(() {
+              final data = bloc.surahDetail.value;
+              if (data == null) return const SizedBox();
+              return Column(
+                children: [
+                  Text(
+                    "Surah ${data.namaLatin}",
+                    style: AppTextStyles.subtitle1.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
+                  Text(
+                    data.arti.toUpperCase(),
+                    style: AppTextStyles.overline.copyWith(
+                      color: AppColor.secondaryColor,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ],
+              );
+            }),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.tune, color: AppColor.primaryColor),
+                onPressed: () {},
               ),
-            ),
-            Text(
-              "THE CAVE",
-              style: AppTextStyles.overline.copyWith(
-                color: AppColor.secondaryColor,
-                letterSpacing: 1.5,
-              ),
-            ),
-          ],
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.tune, color: AppColor.primaryColor),
-            onPressed: () {},
+            ],
+            backgroundColor: Colors.white,
+            elevation: 0,
           ),
-        ],
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              children: [
-                const DetailHeader(),
-                const SizedBox(height: 16),
-                _buildMockAyah(1),
-                _buildMockAyah(2),
-                _buildMockAyah(3),
-                const SizedBox(height: 100), // Space for bottom player
-              ],
-            ),
-          ),
-          const AudioPlayerBar(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMockAyah(int number) {
-    return AyahItem(
-      number: number,
-      arabic:
-          'الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَى عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجَا',
-      translation:
-          'All praise is for Allah Who has revealed the Book to His servant, allowing no crookedness in it.',
+          body: Obx(() {
+            final state = bloc.userDataState.value;
+            if (state is LoadingCase) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is ErrorCase) {
+              return Center(child: Text(state.failure.toString()));
+            } else if (state is LoadedCase) {
+              final data = bloc.surahDetail.value;
+              if (data == null) return const SizedBox();
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      itemCount: data.ayat.length + 1, // +1 for Header
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return const Column(
+                            children: [DetailHeader(), SizedBox(height: 16)],
+                          );
+                        }
+                        final ayat = data.ayat[index - 1]; // Offset by 1
+                        return AyahItem(
+                          number: ayat.nomorAyat,
+                          arabic: ayat.teksArab,
+                          translation: ayat.teksIndonesia,
+                        );
+                      },
+                    ),
+                  ),
+                  const AudioPlayerBar(),
+                ],
+              );
+            }
+            return const SizedBox();
+          }),
+        );
+      },
     );
   }
 }

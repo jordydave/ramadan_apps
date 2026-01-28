@@ -1,4 +1,5 @@
 import 'package:ramadan_apps/data/dto/response/base_response/base_response.dart';
+import 'package:ramadan_apps/data/dto/surah_detail_dto.dart';
 import 'package:ramadan_apps/data/dto/surah_dto.dart';
 import 'package:ramadan_apps/network/http_util/http_util.dart';
 
@@ -25,6 +26,26 @@ class SurahRemoteDataSource {
             .toList();
       }
       return [];
+    });
+  }
+
+  Future<SurahDetailDto> getSurahDetail(int id) async {
+    final response = await httpUtil.get(
+      uri: 'https://equran.id/api/v2/surat/$id',
+    );
+
+    return response.fold((error) => throw Exception(error.messageAsString), (
+      data,
+    ) {
+      if (data is BaseResponse) {
+        if (data.data is Map<String, dynamic>) {
+          return SurahDetailDto.fromJson(data.data as Map<String, dynamic>);
+        }
+      } else if (data is Map<String, dynamic> &&
+          data['data'] is Map<String, dynamic>) {
+        return SurahDetailDto.fromJson(data['data'] as Map<String, dynamic>);
+      }
+      throw Exception('Invalid data format');
     });
   }
 }

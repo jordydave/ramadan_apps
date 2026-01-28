@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ramadan_apps/data/datasources/surah_remote_data_source.dart';
 import 'package:ramadan_apps/domain/entities/surah.dart';
+import 'package:ramadan_apps/domain/entities/surah_detail.dart';
 import 'package:ramadan_apps/domain/repositories/surah_repository.dart';
 
 class SurahRepositoryImpl implements SurahRepository {
@@ -14,6 +15,16 @@ class SurahRepositoryImpl implements SurahRepository {
       final dtos = await remoteDataSource.getAllSurah();
       final entities = dtos.map((e) => e.toEntity()).toList();
       return Right(entities);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, SurahDetail>> getSurahDetail(int id) async {
+    try {
+      final dto = await remoteDataSource.getSurahDetail(id);
+      return Right(dto.toEntity());
     } catch (e) {
       return Left(Exception(e.toString()));
     }

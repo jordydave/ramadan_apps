@@ -58,7 +58,10 @@ class _Body extends StatelessWidget {
                       final surah = data[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(SuratDetailPage.page);
+                          Get.toNamed(
+                            SuratDetailPage.page,
+                            arguments: surah.nomor,
+                          );
                         },
                         child: SurahItem(
                           number: surah.nomor,
