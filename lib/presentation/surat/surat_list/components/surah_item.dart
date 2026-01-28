@@ -109,13 +109,15 @@ class SurahItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      '$meaning • $ayas Ayahs',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColor.greyColor,
+                    Flexible(
+                      child: Text(
+                        '$meaning • $ayas Ayahs',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColor.greyColor,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
