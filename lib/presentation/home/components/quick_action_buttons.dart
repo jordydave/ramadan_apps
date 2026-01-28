@@ -15,7 +15,13 @@ class _QuickActionButtons extends StatelessWidget {
             Get.toNamed(SuratListPage.page);
           },
         ),
-        _QuickActionItem(icon: Icons.menu_book_outlined, label: 'Juz'),
+        _QuickActionItem(
+          icon: Icons.menu_book_outlined,
+          label: 'Doa',
+          onTap: () {
+            Get.toNamed(DoaListPage.page);
+          },
+        ),
         _QuickActionItem(icon: Icons.bookmark, label: 'Saved'),
         _QuickActionItem(icon: Icons.search, label: 'Search'),
       ],

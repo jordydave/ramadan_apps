@@ -7,6 +7,8 @@ import 'package:ramadan_apps/presentation/surat/surat_list/bloc/surat_list_exten
 import 'package:ramadan_apps/presentation/surat/surat_list/surat_list_worker.dart';
 import 'package:ramadan_apps/presentation/surat/surat_detail/surat_detail_worker.dart';
 import 'package:ramadan_apps/presentation/surat/surat_detail/bloc/surat_detail_extender.dart';
+import 'package:ramadan_apps/presentation/doa/doa_list/bloc/doa_list_worker.dart';
+import 'package:ramadan_apps/presentation/doa/doa_list/bloc/doa_list_extender.dart';
 
 class Routes {
   static List<GetPage> get list {
@@ -37,6 +39,13 @@ class Routes {
         page: () => SuratDetailPage(),
         binding: BindingsBuilder(() {
           Get.put(SuratDetailBloc());
+        }),
+      ),
+      GetPage(
+        name: DoaListPage.page,
+        page: () => DoaListPage(),
+        binding: BindingsBuilder(() {
+          Get.put(DoaListBloc());
         }),
       ),
     ];
