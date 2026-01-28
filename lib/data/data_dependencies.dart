@@ -6,6 +6,9 @@ import 'package:ramadan_apps/data/repositories/submission/submission_repository.
 import 'package:ramadan_apps/data/repositories/submission/submission_repository_impl.dart';
 import 'package:ramadan_apps/data/repositories/surah_repository_impl.dart';
 
+import 'package:ramadan_apps/data/datasources/prayer_time_remote_data_source.dart';
+import 'package:ramadan_apps/domain/repositories/prayer_time_repository.dart';
+import 'package:ramadan_apps/data/repositories/prayer_time_repository_impl.dart';
 import 'package:ramadan_apps/domain/repositories/surah_repository.dart';
 import 'package:ramadan_apps/data/datasources/doa_remote_data_source.dart';
 import 'package:ramadan_apps/domain/repositories/doa_repository.dart';
@@ -36,5 +39,13 @@ class DataDependencies {
     Get.lazy<DoaRemoteDataSource>(DoaRemoteDataSource(httpUtil: Get.find()));
 
     Get.lazy<DoaRepository>(DoaRepositoryImpl(dataSource: Get.find()));
+
+    Get.lazy<PrayerTimeRemoteDataSource>(
+      PrayerTimeRemoteDataSourceImpl(httpUtil: Get.find()),
+    );
+
+    Get.lazy<PrayerTimeRepository>(
+      PrayerTimeRepositoryImpl(remoteDataSource: Get.find()),
+    );
   }
 }

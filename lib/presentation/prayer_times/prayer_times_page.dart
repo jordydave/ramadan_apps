@@ -26,7 +26,7 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
           SafeArea(
             child: Column(
               children: [
-                _buildHeader(),
+                _buildHeader(context),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -49,7 +49,7 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -59,17 +59,24 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
             children: [
               const Icon(Icons.location_on, color: Colors.white, size: 20),
               const SizedBox(width: 8),
-              Obx(
-                () => Text(
-                  bloc.location.value,
-                  style: AppTextStyles.h5.copyWith(color: Colors.white),
+              GestureDetector(
+                onTap: () => _showProvinsiDialog(context),
+                child: Row(
+                  children: [
+                    Obx(
+                      () => Text(
+                        bloc.selectedProvinsi.value,
+                        style: AppTextStyles.h5.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(width: 4),
-              const Icon(
-                Icons.keyboard_arrow_down,
-                color: Colors.white,
-                size: 20,
               ),
             ],
           ),
@@ -131,5 +138,57 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
 
       return const SizedBox();
     });
+  }
+
+  void _showProvinsiDialog(BuildContext context) {
+    Get.bottomSheet(
+      Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Select Province',
+                style: AppTextStyles.h5.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: Obx(() {
+                final state = bloc.provinsiListState.value;
+                if (state is LoadingCase) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is LoadedCase<List<String>>) {
+                  final data = state.data ?? [];
+                  return ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final provinsi = data[index];
+                      return ListTile(
+                        title: Text(provinsi, style: AppTextStyles.body),
+                        onTap: () {
+                          bloc.updateProvinsi(provinsi);
+                          Get.back();
+                        },
+                      );
+                    },
+                  );
+                }
+                return const Center(child: Text('Failed to load provinces'));
+              }),
+            ),
+          ],
+        ),
+      ),
+      isScrollControlled: true,
+    );
   }
 }

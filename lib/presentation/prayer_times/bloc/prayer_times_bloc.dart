@@ -1,10 +1,29 @@
 part of 'prayer_times_extender.dart';
 
 class PrayerTimesBloc extends GetxController with _Extender {
+  final GetProvinsiListUseCase _getProvinsiListUseCase = Get.find();
+
   @override
   void onInit() {
     super.onInit();
     loadDummyData();
+    fetchProvinsiList();
+  }
+
+  void fetchProvinsiList() async {
+    provinsiListState.value = LoadingCase();
+    final result = await _getProvinsiListUseCase();
+    result.fold((error) => provinsiListState.value = ErrorCase(error), (data) {
+      provinsiListState.value = LoadedCase(data);
+      if (data.isNotEmpty && !data.contains(selectedProvinsi.value)) {
+        selectedProvinsi.value = data.first;
+      }
+    });
+  }
+
+  void updateProvinsi(String provinsi) {
+    selectedProvinsi.value = provinsi;
+    // TODO: Fetch prayer times for new province
   }
 
   void loadDummyData() {
