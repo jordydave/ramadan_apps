@@ -6,6 +6,8 @@ import 'package:ramadan_apps/ui_kit/text_styles.dart';
 import 'package:ramadan_apps/core/get_state/get_state.dart';
 import 'package:ramadan_apps/presentation/doa/doa_list/components/category_chip.dart';
 import 'package:ramadan_apps/presentation/doa/doa_list/components/doa_card.dart';
+import 'package:ramadan_apps/core/case/case.dart';
+import 'package:ramadan_apps/domain/entities/doa.dart';
 
 part 'package:ramadan_apps/presentation/doa/doa_list/doa_list_page.dart';
 

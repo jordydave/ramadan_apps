@@ -149,21 +149,47 @@ class DoaListPage extends GetState<DoaListBloc> with _Worker {
                         const SizedBox(height: 16),
                         Expanded(
                           child: Obx(() {
-                            final data = bloc.doaList;
-                            return ListView.separated(
-                              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                              itemCount: data.length,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 16),
-                              itemBuilder: (context, index) {
-                                final item = data[index];
-                                return DoaCard(
-                                  title: item['title'],
-                                  arabic: item['arabic'],
-                                  translation: item['translation'],
+                            final state = bloc.userDataState.value;
+                            if (state is LoadingCase) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (state is ErrorCase ||
+                                state is ExceptionCase) {
+                              return Center(
+                                child: Text(
+                                  state.failure?.toString() ??
+                                      'Unknown error occurred',
+                                ),
+                              );
+                            } else if (state is LoadedCase<List<Doa>>) {
+                              final data = state.data ?? [];
+                              if (data.isEmpty) {
+                                return const Center(
+                                  child: Text('No Doa found'),
                                 );
-                              },
-                            );
+                              }
+                              return ListView.separated(
+                                padding: const EdgeInsets.fromLTRB(
+                                  24,
+                                  0,
+                                  24,
+                                  24,
+                                ),
+                                itemCount: data.length,
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 16),
+                                itemBuilder: (context, index) {
+                                  final item = data[index];
+                                  return DoaCard(
+                                    title: item.nama,
+                                    arabic: item.ar,
+                                    translation: item.idn,
+                                  );
+                                },
+                              );
+                            }
+                            return const SizedBox();
                           }),
                         ),
                       ],
