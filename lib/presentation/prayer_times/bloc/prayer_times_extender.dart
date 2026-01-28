@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ramadan_apps/domain/usecase/get_kab_kota_list_usecase.dart';
 import 'package:ramadan_apps/core/case/case.dart';
 import 'package:ramadan_apps/domain/usecase/get_provinsi_list_usecase.dart';
 
@@ -10,6 +11,10 @@ mixin class _Extender {
   // Province selection
   final provinsiListState = Rx<Case<List<String>>>(InitialCase());
   final selectedProvinsi = RxString('DKI Jakarta'); // Default
+
+  // KabKota selection
+  final kabKotaListState = Rx<Case<List<String>>>(InitialCase());
+  final selectedKabKota = RxString('');
 
   // Dummy data for Header
   // Dummy data for Header

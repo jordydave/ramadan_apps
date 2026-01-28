@@ -3,6 +3,8 @@ part of 'prayer_times_extender.dart';
 class PrayerTimesBloc extends GetxController with _Extender {
   final GetProvinsiListUseCase _getProvinsiListUseCase = Get.find();
 
+  final _getKabKotaListUseCase = Get.find<GetKabKotaListUseCase>();
+
   @override
   void onInit() {
     super.onInit();
@@ -17,13 +19,35 @@ class PrayerTimesBloc extends GetxController with _Extender {
       provinsiListState.value = LoadedCase(data);
       if (data.isNotEmpty && !data.contains(selectedProvinsi.value)) {
         selectedProvinsi.value = data.first;
+        fetchKabKotaList(selectedProvinsi.value);
+      } else if (data.contains(selectedProvinsi.value)) {
+        fetchKabKotaList(selectedProvinsi.value);
+      }
+    });
+  }
+
+  void fetchKabKotaList(String provinsi) async {
+    kabKotaListState.value = LoadingCase();
+    final result = await _getKabKotaListUseCase(provinsi);
+    result.fold((error) => kabKotaListState.value = ErrorCase(error), (data) {
+      kabKotaListState.value = LoadedCase(data);
+      if (data.isNotEmpty) {
+        selectedKabKota.value = data.first;
+      } else {
+        selectedKabKota.value = '';
       }
     });
   }
 
   void updateProvinsi(String provinsi) {
     selectedProvinsi.value = provinsi;
-    // TODO: Fetch prayer times for new province
+    selectedKabKota.value = '';
+    fetchKabKotaList(provinsi);
+  }
+
+  void updateKabKota(String city) {
+    selectedKabKota.value = city;
+    // TODO: Fetch prayer times for new city
   }
 
   void loadDummyData() {

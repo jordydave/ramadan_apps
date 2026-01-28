@@ -14,6 +14,7 @@ import 'package:ramadan_apps/domain/usecase/surah/get_tafsir_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/get_doa_list_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/get_doa_detail_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/get_provinsi_list_usecase.dart';
+import 'package:ramadan_apps/domain/usecase/get_kab_kota_list_usecase.dart';
 
 import 'package:get/get.dart';
 
@@ -42,6 +43,9 @@ class DomainDependencies {
 
     Get.lazy<GetProvinsiListUseCase>(
       GetProvinsiListUseCase(repository: Get.find()),
+    );
+    Get.lazy<GetKabKotaListUseCase>(
+      GetKabKotaListUseCase(repository: Get.find()),
     );
   }
 }

@@ -65,7 +65,9 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
                   children: [
                     Obx(
                       () => Text(
-                        bloc.selectedProvinsi.value,
+                        bloc.selectedKabKota.value.isNotEmpty
+                            ? bloc.selectedKabKota.value
+                            : bloc.selectedProvinsi.value,
                         style: AppTextStyles.h5.copyWith(color: Colors.white),
                       ),
                     ),
@@ -184,13 +186,77 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
                         ),
                         onTap: () {
                           bloc.updateProvinsi(provinsi);
-                          Get.back();
+                          Get.back(); // Close province dialog
+                          // Open City Dialog after a short delay to allow UI to settle or immediately
+                          Future.delayed(const Duration(milliseconds: 300), () {
+                            _showKabKotaDialog();
+                          });
                         },
                       );
                     },
                   );
                 }
                 return const Center(child: Text('Failed to load provinces'));
+              }),
+            ),
+          ],
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
+
+  void _showKabKotaDialog() {
+    Get.bottomSheet(
+      Container(
+        height: Get.height * 0.7,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Select City',
+                style: AppTextStyles.h5.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Obx(() {
+                final state = bloc.kabKotaListState.value;
+                if (state is LoadingCase || state is InitialCase) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is LoadedCase<List<String>>) {
+                  final data = state.data ?? [];
+                  return ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final city = data[index];
+                      return ListTile(
+                        title: Text(
+                          city,
+                          style: AppTextStyles.body.copyWith(
+                            color: Colors.black,
+                          ),
+                        ),
+                        onTap: () {
+                          bloc.updateKabKota(city);
+                          Get.back();
+                        },
+                      );
+                    },
+                  );
+                }
+                return const Center(child: Text('Failed to load cities'));
               }),
             ),
           ],

@@ -16,4 +16,16 @@ class PrayerTimeRepositoryImpl implements PrayerTimeRepository {
       return Left(Exception(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Exception, List<String>>> getKabKotaList(
+    String provinsi,
+  ) async {
+    try {
+      final result = await remoteDataSource.getKabKotaList(provinsi);
+      return Right(result);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
 }
