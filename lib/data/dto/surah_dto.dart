@@ -50,4 +50,17 @@ class SurahDto {
       audioFull: audioFull,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nomor': nomor,
+      'nama': nama,
+      'namaLatin': namaLatin,
+      'jumlahAyat': jumlahAyat,
+      'tempatTurun': tempatTurun,
+      'arti': arti,
+      'deskripsi': deskripsi,
+      'audioFull': audioFull,
+    };
+  }
 }

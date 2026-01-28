@@ -9,9 +9,9 @@ class SuratListBloc extends GetxController with _Extender {
     fetchSurah();
   }
 
-  Future<void> fetchSurah() async {
+  Future<void> fetchSurah({bool forceRefresh = false}) async {
     userDataState.value = LoadingCase();
-    final result = await getAllSurahUseCase();
+    final result = await getAllSurahUseCase(forceRefresh: forceRefresh);
 
     result.fold(
       (error) {

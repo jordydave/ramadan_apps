@@ -9,7 +9,9 @@ class GetAllSurahUseCaseImpl implements GetAllSurahUseCase {
   GetAllSurahUseCaseImpl({required this.repository});
 
   @override
-  Future<Either<Exception, List<Surah>>> call() async {
-    return await repository.getAllSurah();
+  Future<Either<Exception, List<Surah>>> call({
+    bool forceRefresh = false,
+  }) async {
+    return await repository.getAllSurah(forceRefresh: forceRefresh);
   }
 }

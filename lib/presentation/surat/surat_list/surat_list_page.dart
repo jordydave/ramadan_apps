@@ -49,32 +49,35 @@ class _Body extends StatelessWidget {
                   return Center(child: Text(state.failure.toString()));
                 } else if (state is LoadedCase) {
                   final data = bloc.listSurah;
-                  return ListView.separated(
-                    padding: const EdgeInsets.all(24),
-                    itemCount: data.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      final surah = data[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(
-                            SuratDetailPage.page,
-                            arguments: surah.nomor,
-                          );
-                        },
-                        child: SurahItem(
-                          number: surah.nomor,
-                          name: surah.namaLatin,
-                          meaning: surah.arti,
-                          ayas: surah.jumlahAyat,
-                          type: surah.tempatTurun == 'Mekah'
-                              ? 'Meccan'
-                              : 'Medinan',
-                          arabicName: surah.nama,
-                        ),
-                      );
-                    },
+                  return RefreshIndicator(
+                    onRefresh: () => bloc.fetchSurah(forceRefresh: true),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(24),
+                      itemCount: data.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 16),
+                      itemBuilder: (context, index) {
+                        final surah = data[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(
+                              SuratDetailPage.page,
+                              arguments: surah.nomor,
+                            );
+                          },
+                          child: SurahItem(
+                            number: surah.nomor,
+                            name: surah.namaLatin,
+                            meaning: surah.arti,
+                            ayas: surah.jumlahAyat,
+                            type: surah.tempatTurun == 'Mekah'
+                                ? 'Meccan'
+                                : 'Medinan',
+                            arabicName: surah.nama,
+                          ),
+                        );
+                      },
+                    ),
                   );
                 }
                 return const SizedBox();
