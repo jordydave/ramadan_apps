@@ -17,4 +17,14 @@ class DoaRepositoryImpl implements DoaRepository {
       return Left(Exception(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Exception, Doa>> getDoaDetail(int id) async {
+    try {
+      final result = await dataSource.getDoaDetail(id);
+      return Right(result.toEntity());
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
 }

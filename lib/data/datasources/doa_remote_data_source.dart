@@ -27,4 +27,22 @@ class DoaRemoteDataSource {
       return [];
     });
   }
+
+  Future<DoaDto> getDoaDetail(int id) async {
+    final response = await httpUtil.get(uri: 'https://equran.id/api/doa/$id');
+
+    return response.fold((error) => throw Exception(error.messageAsString), (
+      data,
+    ) {
+      if (data is BaseResponse) {
+        if (data.data is Map<String, dynamic>) {
+          return DoaDto.fromJson(data.data as Map<String, dynamic>);
+        }
+      } else if (data is Map<String, dynamic> &&
+          data['data'] is Map<String, dynamic>) {
+        return DoaDto.fromJson(data['data'] as Map<String, dynamic>);
+      }
+      throw Exception('Invalid data format');
+    });
+  }
 }

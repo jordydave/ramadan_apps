@@ -181,10 +181,19 @@ class DoaListPage extends GetState<DoaListBloc> with _Worker {
                                     const SizedBox(height: 16),
                                 itemBuilder: (context, index) {
                                   final item = data[index];
-                                  return DoaCard(
-                                    title: item.nama,
-                                    arabic: item.ar,
-                                    translation: item.idn,
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: DoaCard(
+                                      title: item.nama,
+                                      arabic: item.ar,
+                                      translation: item.idn,
+                                      onTap: () {
+                                        Get.to(
+                                          () => DoaDetailPage(),
+                                          arguments: item.id,
+                                        );
+                                      },
+                                    ),
                                   );
                                 },
                               );

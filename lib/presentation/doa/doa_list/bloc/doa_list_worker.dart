@@ -8,6 +8,7 @@ import 'package:ramadan_apps/presentation/doa/doa_list/components/category_chip.
 import 'package:ramadan_apps/presentation/doa/doa_list/components/doa_card.dart';
 import 'package:ramadan_apps/core/case/case.dart';
 import 'package:ramadan_apps/domain/entities/doa.dart';
+import 'package:ramadan_apps/presentation/doa/doa_detail/bloc/doa_detail_worker.dart';
 
 part 'package:ramadan_apps/presentation/doa/doa_list/doa_list_page.dart';
 

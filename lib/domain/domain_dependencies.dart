@@ -12,6 +12,7 @@ import 'package:ramadan_apps/domain/usecase/surah/get_all_surah_usecase_impl.dar
 import 'package:ramadan_apps/domain/usecase/surah/get_surah_detail_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/surah/get_tafsir_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/get_doa_list_usecase.dart';
+import 'package:ramadan_apps/domain/usecase/get_doa_detail_usecase.dart';
 
 import 'package:get/get.dart';
 
@@ -35,5 +36,7 @@ class DomainDependencies {
     Get.lazy<GetTafsirUseCase>(GetTafsirUseCaseImpl(repository: Get.find()));
 
     Get.lazy<GetDoaListUseCase>(GetDoaListUseCase(repository: Get.find()));
+
+    Get.lazy<GetDoaDetailUseCase>(GetDoaDetailUseCase(repository: Get.find()));
   }
 }
