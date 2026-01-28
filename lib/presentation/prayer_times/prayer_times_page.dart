@@ -157,13 +157,16 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Select Province',
-                style: AppTextStyles.h5.copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.h5.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Force black color
+                ),
               ),
             ),
             Expanded(
               child: Obx(() {
                 final state = bloc.provinsiListState.value;
-                if (state is LoadingCase) {
+                if (state is LoadingCase || state is InitialCase) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (state is LoadedCase<List<String>>) {
@@ -173,7 +176,12 @@ class PrayerTimesPage extends GetState<PrayerTimesBloc> with _Worker {
                     itemBuilder: (context, index) {
                       final provinsi = data[index];
                       return ListTile(
-                        title: Text(provinsi, style: AppTextStyles.body),
+                        title: Text(
+                          provinsi,
+                          style: AppTextStyles.body.copyWith(
+                            color: Colors.black,
+                          ),
+                        ),
                         onTap: () {
                           bloc.updateProvinsi(provinsi);
                           Get.back();
