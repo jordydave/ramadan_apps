@@ -5,7 +5,11 @@ import 'package:ramadan_apps/data/datasources/surah_remote_data_source.dart';
 import 'package:ramadan_apps/data/repositories/submission/submission_repository.dart';
 import 'package:ramadan_apps/data/repositories/submission/submission_repository_impl.dart';
 import 'package:ramadan_apps/data/repositories/surah_repository_impl.dart';
+
 import 'package:ramadan_apps/domain/repositories/surah_repository.dart';
+import 'package:ramadan_apps/data/datasources/doa_remote_data_source.dart';
+import 'package:ramadan_apps/domain/repositories/doa_repository.dart';
+import 'package:ramadan_apps/data/repositories/doa_repository_impl.dart';
 import 'package:get/get.dart';
 
 class DataDependencies {
@@ -28,5 +32,9 @@ class DataDependencies {
         localDataSource: Get.find(),
       ),
     );
+
+    Get.lazy<DoaRemoteDataSource>(DoaRemoteDataSource(httpUtil: Get.find()));
+
+    Get.lazy<DoaRepository>(DoaRepositoryImpl(dataSource: Get.find()));
   }
 }
