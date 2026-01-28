@@ -8,6 +8,7 @@ import 'package:ramadan_apps/core/get_state/get_state_builder.dart';
 import 'package:ramadan_apps/presentation/surat/surat_detail/components/audio_player_bar.dart';
 import 'package:ramadan_apps/presentation/surat/surat_detail/components/ayah_item.dart';
 import 'package:ramadan_apps/presentation/surat/surat_detail/components/detail_header.dart';
+import 'package:ramadan_apps/presentation/surat/surat_detail/components/tafsir_bottom_sheet.dart';
 import 'package:ramadan_apps/ui_kit/colors.dart';
 import 'package:ramadan_apps/ui_kit/text_styles.dart';
 

@@ -10,6 +10,7 @@ import 'package:ramadan_apps/domain/usecase/submission/update_submission_usecase
 import 'package:ramadan_apps/domain/usecase/surah/get_all_surah_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/surah/get_all_surah_usecase_impl.dart';
 import 'package:ramadan_apps/domain/usecase/surah/get_surah_detail_usecase.dart';
+import 'package:ramadan_apps/domain/usecase/surah/get_tafsir_usecase.dart';
 
 import 'package:get/get.dart';
 
@@ -29,5 +30,7 @@ class DomainDependencies {
     Get.lazy<GetSurahDetailUseCase>(
       GetSurahDetailUseCaseImpl(repository: Get.find()),
     );
+
+    Get.lazy<GetTafsirUseCase>(GetTafsirUseCaseImpl(repository: Get.find()));
   }
 }

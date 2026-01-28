@@ -24,4 +24,22 @@ class SuratDetailBloc extends GetxController with _Extender {
       },
     );
   }
+
+  Future<void> fetchTafsir(int id) async {
+    // Only fetch if empty to avoid stale or redundant calls
+    if (tafsirList.isNotEmpty) return;
+
+    tafsirState.value = LoadingCase();
+    final result = await getTafsirUseCase(id);
+
+    result.fold(
+      (failure) {
+        tafsirState.value = ErrorCase(failure);
+      },
+      (data) {
+        tafsirList.assignAll(data);
+        tafsirState.value = LoadedCase(data);
+      },
+    );
+  }
 }

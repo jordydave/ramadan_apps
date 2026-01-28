@@ -50,6 +50,15 @@ class SuratDetailPage extends GetState<SuratDetailBloc> with _Worker {
             centerTitle: true,
             actions: [
               IconButton(
+                icon: Icon(Icons.menu_book, color: AppColor.primaryColor),
+                onPressed: () {
+                  Get.bottomSheet(
+                    TafsirBottomSheet(bloc: bloc, surahId: Get.arguments),
+                    isScrollControlled: true,
+                  );
+                },
+              ),
+              IconButton(
                 icon: Icon(Icons.tune, color: AppColor.primaryColor),
                 onPressed: () {},
               ),
