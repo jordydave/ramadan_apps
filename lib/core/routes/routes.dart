@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:ramadan_apps/presentation/prayer_times/bloc/prayer_times_extender.dart';
+import 'package:ramadan_apps/presentation/prayer_times/bloc/prayer_times_worker.dart';
 import 'package:ramadan_apps/presentation/splash/bloc/splash_extender.dart';
 import 'package:ramadan_apps/presentation/splash/splash_worker.dart';
 import 'package:ramadan_apps/presentation/home/bloc/home_extender.dart';
@@ -46,6 +48,13 @@ class Routes {
         page: () => DoaListPage(),
         binding: BindingsBuilder(() {
           Get.put(DoaListBloc());
+        }),
+      ),
+      GetPage(
+        name: PrayerTimesPage.page,
+        page: () => PrayerTimesPage(),
+        binding: BindingsBuilder(() {
+          Get.put(PrayerTimesBloc());
         }),
       ),
     ];

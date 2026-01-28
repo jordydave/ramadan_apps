@@ -22,7 +22,13 @@ class _QuickActionButtons extends StatelessWidget {
             Get.toNamed(DoaListPage.page);
           },
         ),
-        _QuickActionItem(icon: Icons.bookmark, label: 'Saved'),
+        _QuickActionItem(
+          icon: Icons.mosque,
+          label: 'Prayer',
+          onTap: () {
+            Get.toNamed(PrayerTimesPage.page);
+          },
+        ),
         _QuickActionItem(icon: Icons.search, label: 'Search'),
       ],
     );
