@@ -3,6 +3,8 @@ import 'package:ramadan_apps/presentation/splash/bloc/splash_extender.dart';
 import 'package:ramadan_apps/presentation/splash/splash_worker.dart';
 import 'package:ramadan_apps/presentation/home/bloc/home_extender.dart';
 import 'package:ramadan_apps/presentation/home/home_worker.dart';
+import 'package:ramadan_apps/presentation/surat/surat_list/bloc/surat_list_extender.dart';
+import 'package:ramadan_apps/presentation/surat/surat_list/surat_list_worker.dart';
 
 class Routes {
   static List<GetPage> get list {
@@ -19,6 +21,13 @@ class Routes {
         page: () => HomePage(),
         binding: BindingsBuilder(() {
           Get.put(HomeBloc());
+        }),
+      ),
+      GetPage(
+        name: SuratListPage.page,
+        page: () => SuratListPage(),
+        binding: BindingsBuilder(() {
+          Get.put(SuratListBloc());
         }),
       ),
     ];

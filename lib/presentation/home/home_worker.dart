@@ -1,6 +1,7 @@
 import 'package:ramadan_apps/core/get_state/get_state.dart';
 import 'package:ramadan_apps/core/get_state/get_state_builder.dart';
 import 'package:ramadan_apps/presentation/home/bloc/home_extender.dart';
+import 'package:ramadan_apps/presentation/surat/surat_list/surat_list_worker.dart';
 import 'package:ramadan_apps/ui_kit/colors.dart';
 
 import 'package:get/get.dart';
