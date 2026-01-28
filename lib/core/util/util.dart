@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ramadan_apps/presentation/splash/splash_worker.dart';
 import 'package:ramadan_apps/ui_kit/widgets/shared_confirmation_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -158,12 +159,7 @@ class Util {
   }
 
   static String getInitialRoute() {
-    // final storage = GetStorage();
-    // final userId = storage.read('user_id');
-    // return (userId != null && userId.toString().isNotEmpty)
-    //     ? HomePage.page
-    //     : LoginPage.page;
-    return '';
+    return SplashPage.page;
   }
 
   static void clearAuthAndNavigateToLogin() {

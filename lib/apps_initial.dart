@@ -1,4 +1,4 @@
-import 'package:ramadan_apps/presentation/splash/splash_worker.dart';
+import 'package:ramadan_apps/presentation/home/home_worker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,7 +23,7 @@ class AppsInitial extends StatelessWidget {
                   defaultTransition: Transition.cupertino,
                   debugShowCheckedModeBanner: false,
                   navigatorKey: Get.key,
-                  initialRoute: SplashPage.page,
+                  initialRoute: HomePage.page,
                   getPages: Routes.list,
                   theme: ThemeData(
                     scaffoldBackgroundColor: AppColor.whiteColor,
