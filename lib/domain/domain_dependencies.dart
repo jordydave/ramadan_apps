@@ -7,6 +7,8 @@ import 'package:ramadan_apps/domain/usecase/submission/submission_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/submission/submission_usecase_impl.dart';
 import 'package:ramadan_apps/domain/usecase/submission/update_submission_usecase.dart';
 import 'package:ramadan_apps/domain/usecase/submission/update_submission_usecase_impl.dart';
+import 'package:ramadan_apps/domain/usecase/surah/get_all_surah_usecase.dart';
+import 'package:ramadan_apps/domain/usecase/surah/get_all_surah_usecase_impl.dart';
 import 'package:get/get.dart';
 
 class DomainDependencies {
@@ -18,6 +20,9 @@ class DomainDependencies {
     );
     Get.lazy<UpdateSubmissionUsecase>(
       UpdateSubmissionUsecaseImpl(repository: Get.find()),
+    );
+    Get.lazy<GetAllSurahUseCase>(
+      GetAllSurahUseCaseImpl(repository: Get.find()),
     );
   }
 }

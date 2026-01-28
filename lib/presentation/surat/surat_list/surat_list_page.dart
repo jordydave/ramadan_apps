@@ -41,74 +41,36 @@ class _Body extends StatelessWidget {
               child: SurahFilterTabs(bloc: bloc),
             ),
             Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.all(24),
-                itemCount: 6, // Mock data count
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
-                itemBuilder: (context, index) {
-                  // Mock Data for UI
-                  final mockData = [
-                    {
-                      'number': 1,
-                      'name': 'Al-Fatiha',
-                      'meaning': 'The Opening',
-                      'ayas': 7,
-                      'type': 'Meccan',
-                      'arabic': 'الفاتحة',
+              child: Obx(() {
+                final state = bloc.userDataState.value;
+                if (state is LoadingCase) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ErrorCase) {
+                  return Center(child: Text(state.failure.toString()));
+                } else if (state is LoadedCase) {
+                  final data = bloc.listSurah;
+                  return ListView.separated(
+                    padding: const EdgeInsets.all(24),
+                    itemCount: data.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      final surah = data[index];
+                      return SurahItem(
+                        number: surah.nomor,
+                        name: surah.namaLatin,
+                        meaning: surah.arti,
+                        ayas: surah.jumlahAyat,
+                        type: surah.tempatTurun == 'Mekah'
+                            ? 'Meccan'
+                            : 'Medinan',
+                        arabicName: surah.nama,
+                      );
                     },
-                    {
-                      'number': 2,
-                      'name': 'Al-Baqarah',
-                      'meaning': 'The Cow',
-                      'ayas': 286,
-                      'type': 'Medinan',
-                      'arabic': 'البقرة',
-                    },
-                    {
-                      'number': 3,
-                      'name': "Ali 'Imran",
-                      'meaning': 'Family of Imran',
-                      'ayas': 200,
-                      'type': 'Medinan',
-                      'arabic': 'آل عمران',
-                    },
-                    {
-                      'number': 4,
-                      'name': 'An-Nisa',
-                      'meaning': 'The Women',
-                      'ayas': 176,
-                      'type': 'Medinan',
-                      'arabic': 'النساء',
-                    },
-                    {
-                      'number': 5,
-                      'name': "Al-Ma'idah",
-                      'meaning': 'The Table Spread',
-                      'ayas': 120,
-                      'type': 'Medinan',
-                      'arabic': 'المائدة',
-                    },
-                    {
-                      'number': 6,
-                      'name': "Al-An'am",
-                      'meaning': 'The Cattle',
-                      'ayas': 165,
-                      'type': 'Meccan',
-                      'arabic': 'الأنعام',
-                    },
-                  ];
-                  final data = mockData[index];
-                  return SurahItem(
-                    number: data['number'] as int,
-                    name: data['name'] as String,
-                    meaning: data['meaning'] as String,
-                    ayas: data['ayas'] as int,
-                    type: data['type'] as String,
-                    arabicName: data['arabic'] as String,
                   );
-                },
-              ),
+                }
+                return const SizedBox();
+              }),
             ),
           ],
         ),

@@ -7,6 +7,7 @@ import 'package:ramadan_apps/presentation/surat/surat_list/components/surah_filt
 import 'package:ramadan_apps/presentation/surat/surat_list/components/surah_item.dart';
 import 'package:ramadan_apps/ui_kit/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:ramadan_apps/core/case/case.dart';
 
 part 'surat_list_page.dart';
 
