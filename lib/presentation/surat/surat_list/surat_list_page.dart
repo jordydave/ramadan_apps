@@ -56,15 +56,20 @@ class _Body extends StatelessWidget {
                         const SizedBox(height: 16),
                     itemBuilder: (context, index) {
                       final surah = data[index];
-                      return SurahItem(
-                        number: surah.nomor,
-                        name: surah.namaLatin,
-                        meaning: surah.arti,
-                        ayas: surah.jumlahAyat,
-                        type: surah.tempatTurun == 'Mekah'
-                            ? 'Meccan'
-                            : 'Medinan',
-                        arabicName: surah.nama,
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed(SuratDetailPage.page);
+                        },
+                        child: SurahItem(
+                          number: surah.nomor,
+                          name: surah.namaLatin,
+                          meaning: surah.arti,
+                          ayas: surah.jumlahAyat,
+                          type: surah.tempatTurun == 'Mekah'
+                              ? 'Meccan'
+                              : 'Medinan',
+                          arabicName: surah.nama,
+                        ),
                       );
                     },
                   );

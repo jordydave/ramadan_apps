@@ -55,7 +55,10 @@ class AppsInitial extends StatelessWidget {
                   ),
                   themeMode: ThemeMode.light,
                   builder: (context, child) {
-                    return child ?? const SizedBox();
+                    return SafeArea(
+                      top: false,
+                      child: child ?? const SizedBox(),
+                    );
                   },
                 );
               },

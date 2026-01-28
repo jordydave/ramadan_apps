@@ -5,6 +5,8 @@ import 'package:ramadan_apps/presentation/home/bloc/home_extender.dart';
 import 'package:ramadan_apps/presentation/home/home_worker.dart';
 import 'package:ramadan_apps/presentation/surat/surat_list/bloc/surat_list_extender.dart';
 import 'package:ramadan_apps/presentation/surat/surat_list/surat_list_worker.dart';
+import 'package:ramadan_apps/presentation/surat/surat_detail/surat_detail_worker.dart';
+import 'package:ramadan_apps/presentation/surat/surat_detail/bloc/surat_detail_extender.dart';
 
 class Routes {
   static List<GetPage> get list {
@@ -28,6 +30,13 @@ class Routes {
         page: () => SuratListPage(),
         binding: BindingsBuilder(() {
           Get.put(SuratListBloc());
+        }),
+      ),
+      GetPage(
+        name: SuratDetailPage.page,
+        page: () => SuratDetailPage(),
+        binding: BindingsBuilder(() {
+          Get.put(SuratDetailBloc());
         }),
       ),
     ];
